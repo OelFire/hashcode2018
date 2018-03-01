@@ -9,6 +9,12 @@ Map::Map(const std::string &fileName) :
 
 }
 
+void Map::display() {
+	for (std::vector<Vehicle>::iterator it = _vehicles.begin(); it != _vehicles.end(); it++) {
+		(*it).display();
+	}
+}
+
 void Map::firstLine(std::ifstream &fileStream) {
 	std::string         line;
 	int                 rows;
@@ -100,7 +106,8 @@ void Map::GetRidesByStart(int start)
 
 void Map::Resolve()
 {
-	for (auto curVec : _vehicles)
+
+	for (auto it = _vehicles.begin(); it != _vehicles.end(); it++)
 	{
 		int time = 0;
 
@@ -111,15 +118,13 @@ void Map::Resolve()
 			GetRidesByStart(time);
 		}
 
-		std::cout << _map.size() << std::endl;
-		std::cout << _map[0]->getRideNumber() << std::endl;
-	
-		
-		
+		//std::cout << _map.begin()->second->getRideNumber() << std::endl;
 		//TODO choose ride
 
-		curVec.addRide(_map[0]);
+		it->addRide(_map.begin()->second);
 		//TODO add ride in curVec
 		//TODO remove ride from _rides
+		_rides.erase(_rides.begin() + _map.begin()->first);
+		it->display();
 	}
 }

@@ -46,6 +46,7 @@ private:
 public:
 	void    Resolve();
 	void    parse();
+	void	display();
 };
 
 
