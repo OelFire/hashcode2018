@@ -18,6 +18,7 @@ private:
 
 public:
     void addRide(std::shared_ptr<Ride> &ride);
+	void display();
 };
 
 
