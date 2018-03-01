@@ -9,6 +9,12 @@ Map::Map(const std::string &fileName) :
 
 }
 
+void Map::display() {
+	for (std::vector<Vehicle>::iterator it = _vehicles.begin(); it != _vehicles.end(); it++) {
+		(*it).display();
+	}
+}
+
 void Map::firstLine(std::ifstream &fileStream) {
 	std::string         line;
 	int                 rows;
