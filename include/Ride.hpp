@@ -10,7 +10,7 @@
 class Ride {
 
 public:
-    Ride(const Vector2 &startPos, const Vector2 &endPos, int startTime, int endTime, int rideNumber);
+    Ride(const Vector2 &startPos, const Vector2 &endPos, int startTime, int endTime, int rideNumber, int rideTime);
 
 private:
     Vector2 _startPos;
@@ -18,6 +18,7 @@ private:
     int     _startTime;
     int     _endTime;
     int     _rideNumber;
+    int     _rideTime;
 
 public:
     const Vector2 &getStartPos() const;
@@ -25,6 +26,7 @@ public:
     int getStartTime() const;
     int getEndTime() const;
     int getRideNumber() const;
+    int getRideTime() const;
 };
 
 

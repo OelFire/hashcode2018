@@ -8,13 +8,14 @@ Ride::Ride(const Vector2 &startPos,
            const Vector2 &endPos,
            int startTime,
            int endTime,
-           int rideNumber) :
+           int rideNumber,
+           int rideTime) :
         _startPos(startPos),
         _endPos(endPos),
         _startTime(startTime),
         _endTime(endTime),
-        _rideNumber(rideNumber){
-
+        _rideNumber(rideNumber),
+        _rideTime(rideTime){
 }
 
 const Vector2 &Ride::getStartPos() const {
@@ -35,4 +36,8 @@ int Ride::getEndTime() const {
 
 int Ride::getRideNumber() const {
     return _rideNumber;
+}
+
+int Ride::getRideTime() const {
+    return _rideTime;
 }

@@ -4,6 +4,12 @@
 
 #include "Map.hpp"
 
+int abs(int x) {
+    if (x < 0)
+        return -x;
+    return x;
+}
+
 Map::Map(const std::string &fileName) :
 	_fileName(fileName) {
 
@@ -65,17 +71,18 @@ void Map::parseRides(std::ifstream &fileStream) {
 		startPos.set_y(startPosY);
 		endPos.set_x(endPosX);
 		endPos.set_y(endPosY);
-		_rides.push_back(std::make_shared<Ride>(startPos, endPos, startTime, endTime, rideNumber));
+		_rides.push_back(std::make_shared<Ride>(startPos, endPos, startTime, endTime, rideNumber, abs((endPosX - startPosX) + (endPosY - startPosY))));
 		rideNumber++;
 	}
 
 #ifdef __DEBUG__
 	std::for_each(_rides.begin(), _rides.end(), [](auto item) {
 		std::cout << "ride from [" << item->getStartPos().get_x() << ", " << item->getStartPos().get_y() << "]"
-			<< " to [" << item->getEndPos().get_x() << ", " << item->getEndPos().get_y() << "]"
-			<< ", earliest start " << item->getStartTime()
-			<< ", latest finish " << item->getEndTime()
-			<< ", ride id " << item->getRideNumber() << std::endl; });
+                  << " to [" << item->getEndPos().get_x() << ", " << item->getEndPos().get_y() << "]"
+                  << ", earliest start " << item->getStartTime()
+                  << ", latest finish " << item->getEndTime()
+                  << ", ride id " << item->getRideNumber()
+                  << ", ride time " << item->getRideTime() << std::endl; });
 #endif
 
 }
