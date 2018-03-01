@@ -3,7 +3,15 @@
 //
 
 #include <iostream>
+#include "Map.hpp"
 
 int main(int argc, char **argv) {
-    std::cout << "Hello World!" << std::endl;
+    if (argc != 2) {
+        std::cout << "./" << argv[0] << " [entry file]" << std::endl;
+        return 1;
+    }
+    Map map(argv[1]);
+
+    //map.parse();
+    return 0;
 }
