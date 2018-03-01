@@ -20,11 +20,8 @@ class Map {
 
 public:
 	Map(const std::string &fileName);
-	void HardInit();
-	void Resolve();
-	std::map<int, std::shared_ptr<Ride>> GetRidesByStart(int) {
-		return std::map<int, std::shared_ptr<Ride>>();
-	};
+
+
 private:
 	std::string                         _fileName;
 	std::vector<Vehicle>                _vehicles;
@@ -41,12 +38,15 @@ private:
     void    createVehicleVector();
     void    parseRides(std::ifstream &fileStream);
 
-public:
 
+    std::map<int, std::shared_ptr<Ride>> GetRidesByStart(int) {
+        return std::map<int, std::shared_ptr<Ride>>();
+    };
+
+public:
+    void    HardInit();
+    void    Resolve();
     void    parse();
-
-public:
-	std::map<int, std::shared_ptr<Ride>>	&getRidesByStart(int);
 };
 
 
