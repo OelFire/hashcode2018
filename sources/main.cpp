@@ -13,5 +13,6 @@ int main(int argc, char **argv) {
     Map map(argv[1]);
 
     map.parse();
+	map.Resolve();
     return 0;
 }

@@ -12,6 +12,7 @@
 #include <memory>
 #include <map>
 #include <iostream>
+#include <algorithm>
 #include "Vehicle.hpp"
 
 #define __DEBUG__
@@ -27,26 +28,24 @@ private:
 	std::vector<Vehicle>                _vehicles;
 	std::vector<std::shared_ptr<Ride>>  _rides;
 
-    Vector2                 _gridSize;
-    unsigned int            _nbVehicle;
-    unsigned int            _nbRides;
-    unsigned int            _bonus;
-    unsigned long long int  _maxTime;
+	Vector2                 _gridSize;
+	unsigned int            _nbVehicle;
+	unsigned int            _nbRides;
+	unsigned int            _bonus;
+	unsigned long long int  _maxTime;
+
+	std::map<int, std::shared_ptr<Ride>> _map;
 
 private:
-    void    firstLine(std::ifstream &fileStream);
-    void    createVehicleVector();
-    void    parseRides(std::ifstream &fileStream);
+	void    firstLine(std::ifstream &fileStream);
+	void    createVehicleVector();
+	void    parseRides(std::ifstream &fileStream);
 
-
-    std::map<int, std::shared_ptr<Ride>> GetRidesByStart(int) {
-        return std::map<int, std::shared_ptr<Ride>>();
-    };
+	void	GetRidesByStart(int);
 
 public:
-    void    HardInit();
-    void    Resolve();
-    void    parse();
+	void    Resolve();
+	void    parse();
 };
 
 
