@@ -14,5 +14,6 @@ int main(int argc, char **argv) {
 
     map.parse();
 	map.Resolve();
+	std::cin;
     return 0;
 }
