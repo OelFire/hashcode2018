@@ -126,7 +126,7 @@ void Map::loop(std::vector<Vehicle>::iterator it)
 {
 	int time = 0;
 	while (time < _maxTime) {
-		std::cout << "time  = " << time << std::endl;
+		//std::cout << "time  = " << time << std::endl;
 		GetRidesByStart(time);
 		while (_map.size() <= 0)
 		{
@@ -137,6 +137,7 @@ void Map::loop(std::vector<Vehicle>::iterator it)
 		//std::cout << _map.begin()->second->getRideNumber() << std::endl;
 		//TODO choose ride
 
+		time += _map.begin()->second->getRideTime();
 		it->addRide(_map.begin()->second);
 		//TODO add ride in curVec
 		//TODO remove ride from _rides

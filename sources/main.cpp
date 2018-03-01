@@ -14,6 +14,8 @@ int main(int argc, char **argv) {
 
     map.parse();
 	map.Resolve();
+	std::cout << "#################RESULT" << std::endl;
+	map.display();
 	std::cin;
     return 0;
 }
