@@ -25,11 +25,14 @@ private:
 	std::vector<Vehicle>                _vehicles;
 	std::vector<std::shared_ptr<Ride>>  _rides;
 
-	Vector2                 _gridSize;
-	unsigned int            _nbVehicle;
-	unsigned int            _nbRides;
-	unsigned int            _bonus;
-	unsigned long long int  _maxTime;
+    Vector2                 _gridSize;
+    unsigned int            _nbVehicle;
+    unsigned int            _nbRides;
+    unsigned int            _bonus;
+    unsigned long long int  _maxTime;
+
+public:
+	std::map<int, std::shared_ptr<Ride>>	&getRidesByStart(int);
 };
 
 
