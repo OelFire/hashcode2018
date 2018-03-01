@@ -15,7 +15,7 @@
 #include <algorithm>
 #include "Vehicle.hpp"
 
-#define __DEBUG__
+//#define __DEBUG__
 
 class Map {
 
@@ -41,7 +41,7 @@ private:
 	void    createVehicleVector();
 	void    parseRides(std::ifstream &fileStream);
 
-	void	GetRidesByStart(int);
+    std::shared_ptr<Ride>   GetRidesByStart(const Vector2 &vehiclePos, int &distClosest, int &nb);
 	void	loop(std::vector<Vehicle>::iterator);
 
 public:

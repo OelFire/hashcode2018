@@ -5,6 +5,12 @@
 #include <iostream>
 #include "Vehicle.hpp"
 
+
+Vehicle::Vehicle() : _pos(0, 0) {
+
+}
+
+
 void Vehicle::addRide(std::shared_ptr<Ride> &ride) {
     _rides.push_back(ride);
 }

@@ -12,13 +12,19 @@
 
 class Vehicle {
 
+public:
+    Vehicle();
 
 private:
     std::vector< std::shared_ptr<Ride>>   _rides;
+    Vector2                               _pos;
 
 public:
     void addRide(std::shared_ptr<Ride> &ride);
 	void display();
+
+    const Vector2 &getVehiclePos() const { return _pos; }
+    Vector2 &getVehiclePos() { return _pos; }
 };
 
 

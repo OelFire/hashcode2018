@@ -101,47 +101,58 @@ void Map::parse() {
 #endif
 }
 
-void Map::GetRidesByStart(int start)
-{
-	_map.clear();
-
-	for (size_t i = 0; i < _rides.size(); i++) {
-		if (_rides[i]->getStartTime() == start)
-			_map.insert(std::pair<int, std::shared_ptr<Ride>>(i, _rides[i]));
-	}
-}
-
 void Map::Resolve()
 {
 
-	for (auto it = _vehicles.begin(); it != _vehicles.end(); it++)
-	{
-		std::cout << "vehicule" << std::endl;
+    for (auto it = _vehicles.begin(); it != _vehicles.end(); it++)
+    {
+        //std::cout << "vehicule" << std::endl;
 
-		loop(it);
-	}
+        loop(it);
+    }
 }
+
+std::shared_ptr<Ride>   Map::GetRidesByStart(const Vector2 &vehiclePos, int &distClosest, int &nb)
+{
+    std::shared_ptr<Ride> closest;
+    bool first = true;
+    distClosest = 0;
+    int     i = 0;
+    nb = -1;
+
+    for (auto it = _rides.begin(); it != _rides.end(); it++) {
+        int dist = abs((vehiclePos.get_y() - (*it)->getStartPos().get_y()) + (vehiclePos.get_x() - (*it)->getStartPos().get_x()));
+        if (dist == 0) {
+            nb = i;
+            distClosest = dist;
+            return *it;
+        }
+        if (dist < distClosest || first) {
+            distClosest = dist;
+            closest = *it;
+            nb = i;
+            first = false;
+        }
+        i++;
+    }
+    return closest;
+}
+
 
 void Map::loop(std::vector<Vehicle>::iterator it)
 {
 	int time = 0;
 	while (time < _maxTime) {
-		//std::cout << "time  = " << time << std::endl;
-		GetRidesByStart(time);
-		while (_map.size() <= 0)
-		{
-			if (time++ >= _maxTime) return;
-			GetRidesByStart(time);
-		}
 
-		//std::cout << _map.begin()->second->getRideNumber() << std::endl;
-		//TODO choose ride
-
-		time += _map.begin()->second->getRideTime();
-		it->addRide(_map.begin()->second);
-		//TODO add ride in curVec
-		//TODO remove ride from _rides
-		_rides.erase(_rides.begin() + _map.begin()->first);
-		it->display();
+        int dist;
+        int nb;
+        auto ride = GetRidesByStart(it->getVehiclePos(), dist, nb);
+        if (nb == -1)
+            break;
+        it->addRide(ride);
+        it->getVehiclePos().set_x(ride->getEndPos().get_x());
+        it->getVehiclePos().set_y(ride->getEndPos().get_y());
+        time += dist + ride->getRideTime();
+		_rides.erase(_rides.begin() + nb);
 	}
 }
