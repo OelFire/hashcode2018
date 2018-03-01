@@ -18,10 +18,20 @@ void Map::Resolve()
 {
 	for each (auto curVec in _vehicles)
 	{
-		auto rides = GetRidesByStart(0);
-		//TODO check if ride exists
+		int time = 0;
+
+
+
+		auto tmpRides = GetRidesByStart(time);
+		while (tmpRides.size <= 0)
+		{
+			if (time++ >= _maxTime) break;
+			tmpRides = GetRidesByStart(time);
+		}
 		//TODO choose ride
-		auto rideChosen = rides[0];
-		std::cout << rides[0] << std::endl;
+		auto rideChosen = tmpRides[0];
+		//TODO add ride in curVec
+		//TODO remove ride from _rides
+		std::cout << tmpRides[0] << std::endl;
 	}
 }
