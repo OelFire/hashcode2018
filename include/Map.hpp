@@ -6,10 +6,15 @@
 #define HASHCODE2018_MAP_HPP
 
 #include <vector>
+#include <fstream>
+#include <sstream>
 #include <string>
+#include <memory>
 #include <map>
 #include <iostream>
 #include "Vehicle.hpp"
+
+#define __DEBUG__
 
 class Map {
 
@@ -30,6 +35,15 @@ private:
     unsigned int            _nbRides;
     unsigned int            _bonus;
     unsigned long long int  _maxTime;
+
+private:
+    void    firstLine(std::ifstream &fileStream);
+    void    createVehicleVector();
+    void    parseRides(std::ifstream &fileStream);
+
+public:
+
+    void    parse();
 
 public:
 	std::map<int, std::shared_ptr<Ride>>	&getRidesByStart(int);

@@ -4,14 +4,16 @@
 
 #include "Ride.hpp"
 
-Ride::Ride(const Vector2 &_startPos,
-           const Vector2 &_endPos,
-           int _startTime,
-           int _endTime) :
-        _startPos(_startPos),
-        _endPos(_endPos),
-        _startTime(_startTime),
-        _endTime(_endTime) {
+Ride::Ride(const Vector2 &startPos,
+           const Vector2 &endPos,
+           int startTime,
+           int endTime,
+           int rideNumber) :
+        _startPos(startPos),
+        _endPos(endPos),
+        _startTime(startTime),
+        _endTime(endTime),
+        _rideNumber(rideNumber){
 
 }
 
@@ -29,4 +31,8 @@ int Ride::getStartTime() const {
 
 int Ride::getEndTime() const {
     return _endTime;
+}
+
+int Ride::getRideNumber() const {
+    return _rideNumber;
 }
