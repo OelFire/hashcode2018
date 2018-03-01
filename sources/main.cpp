@@ -12,6 +12,6 @@ int main(int argc, char **argv) {
     }
     Map map(argv[1]);
 
-    //map.parse();
+    map.parse();
     return 0;
 }

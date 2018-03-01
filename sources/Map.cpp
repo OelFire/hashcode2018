@@ -21,7 +21,14 @@ void Map::firstLine(std::ifstream &fileStream) {
     ss >> rows >> columns >> _nbVehicle >> _nbRides >> _bonus >> _maxTime;
     _gridSize.set_x(rows);
     _gridSize.set_y(columns);
-    std::cout << _gridSize.get_x() << " " << _gridSize.get_y() << " " << _nbVehicle << " " << _nbRides << " " << _bonus << " " << _maxTime << std::endl;
+#ifdef __DEBUG__
+    std::cout << _gridSize.get_x() << " rows, "
+              << _gridSize.get_y() << " columns, "
+              << _nbVehicle << " vehicles, "
+              << _nbRides << " rides, "
+              << _bonus << " bonus and "
+              << _maxTime << " steps" << std::endl;
+#endif
 }
 
 
@@ -29,9 +36,6 @@ void Map::createVehicleVector() {
     Vehicle vehicle;
 
     _vehicles.insert(_vehicles.begin(), _nbVehicle, vehicle);
-    /*for (int i = 0; i < _nbVehicle; i++) {
-        _vehicles.push_back(vehicle);
-    }*/
 }
 
 void Map::parseRides(std::ifstream &fileStream) {
@@ -57,9 +61,16 @@ void Map::parseRides(std::ifstream &fileStream) {
         _rides.push_back(std::make_shared<Ride>(startPos, endPos, startTime, endTime, rideNumber));
         rideNumber++;
     }
+
+#ifdef __DEBUG__
     std::for_each(_rides.begin(), _rides.end(), [](auto item) {
-        std::cout << item-> << " " << _gridSize.get_y() << " " << _nbVehicle << " " << _nbRides << " " << _bonus << " " << _maxTime << std::endl;
-    });
+        std::cout << "ride from [" << item->getStartPos().get_x() << ", " << item->getStartPos().get_y() << "]"
+                  << " to [" << item->getEndPos().get_x() << ", " << item->getEndPos().get_y() << "]"
+                  << ", earliest start " << item->getStartTime()
+                  << ", latest finish " << item->getEndTime()
+                  << ", ride id " << item->getRideNumber() << std::endl;});
+#endif
+
 }
 
 void Map::parse() {
@@ -71,4 +82,7 @@ void Map::parse() {
     firstLine(fileStream);
     createVehicleVector();
     parseRides(fileStream);
+#ifdef __DEBUG__
+    std::cout << "Nb ride from file:" << _nbRides << ", Nb ride from lines" << _rides.size() << std::endl;
+#endif
 }

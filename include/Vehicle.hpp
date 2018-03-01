@@ -14,7 +14,7 @@ class Vehicle {
 
 
 private:
-    std::vector< std::shared_ptr<Ride> >   _rides;
+    std::vector< std::shared_ptr<Ride>>   _rides;
 
 public:
     void addRide(std::shared_ptr<Ride> &ride);

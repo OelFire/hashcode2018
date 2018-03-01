@@ -13,6 +13,8 @@
 #include <memory>
 #include "Vehicle.hpp"
 
+#define __DEBUG__
+
 class Map {
 
 public:
@@ -21,7 +23,7 @@ public:
 private:
     std::string                             _fileName;
     std::vector<Vehicle>                    _vehicles;
-    std::vector< std::shared_ptr<Ride> >    _rides;
+    std::vector< std::shared_ptr<Ride>>    _rides;
 
     Vector2                 _gridSize;
     unsigned int            _nbVehicle;
