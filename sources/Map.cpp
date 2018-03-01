@@ -34,6 +34,9 @@ void Map::createVehicleVector() {
 	Vehicle vehicle;
 
 	_vehicles.insert(_vehicles.begin(), _nbVehicle, vehicle);
+#ifdef __DEBUG__
+    std::cout << "Vehicle number " << _vehicles.size() << std::endl;
+#endif
 }
 
 void Map::parseRides(std::ifstream &fileStream) {
