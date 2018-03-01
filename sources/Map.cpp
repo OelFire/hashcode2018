@@ -116,12 +116,21 @@ void Map::Resolve()
 
 	for (auto it = _vehicles.begin(); it != _vehicles.end(); it++)
 	{
-		int time = 0;
+		std::cout << "vehicule" << std::endl;
 
+		loop(it);
+	}
+}
+
+void Map::loop(std::vector<Vehicle>::iterator it)
+{
+	int time = 0;
+	while (time < _maxTime) {
+		std::cout << "time  = " << time << std::endl;
 		GetRidesByStart(time);
 		while (_map.size() <= 0)
 		{
-			if (time++ >= _maxTime) break;
+			if (time++ >= _maxTime) return;
 			GetRidesByStart(time);
 		}
 

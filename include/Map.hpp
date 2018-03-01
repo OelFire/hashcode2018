@@ -42,6 +42,7 @@ private:
 	void    parseRides(std::ifstream &fileStream);
 
 	void	GetRidesByStart(int);
+	void	loop(std::vector<Vehicle>::iterator);
 
 public:
 	void    Resolve();
