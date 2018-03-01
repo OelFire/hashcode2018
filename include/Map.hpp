@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 #include "Vehicle.hpp"
 
 class Map {
@@ -24,6 +25,9 @@ private:
     unsigned int            _nbRides;
     unsigned int            _bonus;
     unsigned long long int  _maxTime;
+
+public:
+	std::map<int, std::shared_ptr<Ride>>	&getRidesByStart(int);
 };
 
 
