@@ -6,7 +6,7 @@
 #include "Vehicle.hpp"
 
 
-Vehicle::Vehicle() : _pos(0, 0) {
+Vehicle::Vehicle() : _pos(0, 0), _time(0) {
 
 }
 
@@ -21,4 +21,12 @@ void Vehicle::display() {
 		std::cout << " " << (*it)->getRideNumber();
 	}
 	std::cout << std::endl;
+}
+
+int Vehicle::getTime() const {
+    return _time;
+}
+
+void Vehicle::addTime(int time) {
+    _time += time;
 }

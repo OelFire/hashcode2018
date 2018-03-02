@@ -41,8 +41,7 @@ private:
 	void    createVehicleVector();
 	void    parseRides(std::ifstream &fileStream);
 
-    std::shared_ptr<Ride>   GetRidesByStart(const Vector2 &vehiclePos, int &distClosest, int &nb);
-	void	loop(std::vector<Vehicle>::iterator);
+    std::shared_ptr<Ride>   GetRidesByStart(const Vehicle &vehicle, int &nb);
 
 public:
 	void    Resolve();

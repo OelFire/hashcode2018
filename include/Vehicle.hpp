@@ -16,8 +16,9 @@ public:
     Vehicle();
 
 private:
-    std::vector< std::shared_ptr<Ride>>   _rides;
-    Vector2                               _pos;
+    std::vector< std::shared_ptr<Ride>>     _rides;
+    Vector2                                 _pos;
+    int                                     _time;
 
 public:
     void addRide(std::shared_ptr<Ride> &ride);
@@ -25,6 +26,9 @@ public:
 
     const Vector2 &getVehiclePos() const { return _pos; }
     Vector2 &getVehiclePos() { return _pos; }
+
+    int getTime() const;
+    void addTime(int time);
 };
 
 

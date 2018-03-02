@@ -101,31 +101,24 @@ void Map::parse() {
 #endif
 }
 
-void Map::Resolve()
-{
-
-    for (auto it = _vehicles.begin(); it != _vehicles.end(); it++)
-    {
-        //std::cout << "vehicule" << std::endl;
-
-        loop(it);
-    }
+int getDist(const Vector2 &a, const Vector2 &b) {
+    return abs((a.get_y() - b.get_y()) + (a.get_x() - a.get_x()));
 }
 
-std::shared_ptr<Ride>   Map::GetRidesByStart(const Vector2 &vehiclePos, int &distClosest, int &nb)
+std::shared_ptr<Ride>   Map::GetRidesByStart(const Vehicle &vehicle, int &nb)
 {
-    std::shared_ptr<Ride> closest;
-    bool first = true;
-    distClosest = 0;
-    int     i = 0;
+    std::shared_ptr<Ride>   closest;
+    bool                    first = true;
+    int                     distClosest = 0;
+    int                     i = 0;
+
     nb = -1;
 
-    for (auto it = _rides.begin(); it != _rides.end(); it++) {
-        int dist = abs((vehiclePos.get_y() - (*it)->getStartPos().get_y()) + (vehiclePos.get_x() - (*it)->getStartPos().get_x()));
-        if (dist == 0) {
-            nb = i;
-            distClosest = dist;
-            return *it;
+    for (auto it = _rides.begin(); it != _rides.end(); it++, i++) {
+        int dist = getDist(vehicle.getVehiclePos(), (*it)->getStartPos());
+        if (vehicle.getTime() + dist > (*it)->getStartTime()) {
+        //if (vehicle.getTime() + dist + (*it)->getRideTime() > (*it)->getEndTime()) {
+            continue;
         }
         if (dist < distClosest || first) {
             distClosest = dist;
@@ -133,26 +126,78 @@ std::shared_ptr<Ride>   Map::GetRidesByStart(const Vector2 &vehiclePos, int &dis
             nb = i;
             first = false;
         }
-        i++;
+    }
+    if (nb == -1) {
+        i = 0;
+        distClosest = 0;
+        first = true;
+        nb = -1;
+        for (auto it = _rides.begin(); it != _rides.end(); it++, i++) {
+            int dist = abs((vehicle.getVehiclePos().get_y() - (*it)->getStartPos().get_y()) + (vehicle.getVehiclePos().get_x() - (*it)->getStartPos().get_x()));
+            if (vehicle.getTime() + dist + (*it)->getRideTime() > (*it)->getEndTime()) {
+                continue;
+            }
+            if (dist < distClosest || first) {
+                distClosest = dist;
+                closest = *it;
+                nb = i;
+                first = false;
+            }
+        }
     }
     return closest;
 }
 
-
-void Map::loop(std::vector<Vehicle>::iterator it)
+void Map::Resolve()
 {
-	int time = 0;
-	while (time < _maxTime) {
+    Vector2 orig(0, 0);
+    std::sort(_rides.begin(), _rides.end(), [&orig](auto i, auto j){
 
-        int dist;
-        int nb;
-        auto ride = GetRidesByStart(it->getVehiclePos(), dist, nb);
-        if (nb == -1)
+       return i->getStartTime() < j->getStartTime() || (i->getStartTime() == j->getStartTime() && getDist(orig, i->getStartPos()) < getDist(orig, j->getStartPos()));
+    });
+    /*std::for_each(_rides.begin(), _rides.end(), [](auto item) {
+        std::cout << "ride from [" << item->getStartPos().get_x() << ", " << item->getStartPos().get_y() << "]"
+                  << " to [" << item->getEndPos().get_x() << ", " << item->getEndPos().get_y() << "]"
+                  << ", earliest start " << item->getStartTime()
+                  << ", latest finish " << item->getEndTime()
+                  << ", ride id " << item->getRideNumber()
+                  << ", ride time " << item->getRideTime() << std::endl; });*/
+    for (auto it = _vehicles.begin(); it != _vehicles.end(); it++)
+    {
+        it->addRide(_rides.front());
+        it->addTime(getDist(it->getVehiclePos(), _rides.front()->getStartPos()));
+        it->addTime(_rides.front()->getRideTime());
+        it->getVehiclePos().set_x(_rides.front()->getEndPos().get_x());
+        it->getVehiclePos().set_y(_rides.front()->getEndPos().get_y());
+        _rides.erase(_rides.begin());
+    }
+    while (_rides.size() > 0) {
+        int toto = _rides.size();
+        for (auto it = _vehicles.begin(); it != _vehicles.end() && _rides.size() > 0; it++)
+        {
+            int nb;
+
+            auto ride = GetRidesByStart(*it, nb);
+            if (nb == -1) {
+                continue;
+            }
+            /*if (ride->getRideNumber() == 1354) {
+                std::cout << "ok" << std::endl;
+            }*/
+            if (it->getTime() + getDist(it->getVehiclePos(), ride->getStartPos()) + ride->getRideTime() > _maxTime) {
+                continue;
+            }
+            it->addRide(ride);
+            it->addTime(getDist(it->getVehiclePos(), ride->getStartPos()));
+            it->addTime(ride->getRideTime());
+            it->getVehiclePos().set_x(ride->getEndPos().get_x());
+            it->getVehiclePos().set_y(ride->getEndPos().get_y());
+            _rides.erase(_rides.begin() + nb);
+        }
+        if (toto == _rides.size())
             break;
-        it->addRide(ride);
-        it->getVehiclePos().set_x(ride->getEndPos().get_x());
-        it->getVehiclePos().set_y(ride->getEndPos().get_y());
-        time += dist + ride->getRideTime();
-		_rides.erase(_rides.begin() + nb);
-	}
+    }
 }
+
+
+
