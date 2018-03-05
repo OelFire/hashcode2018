@@ -1,0 +1,9 @@
+﻿  main.cpp
+sources\main.cpp(6): fatal error C1083: Cannot open include file: 'Map.hpp': No such file or directory
+  Map.cpp
+sources\Map.cpp(5): fatal error C1083: Cannot open include file: 'Map.hpp': No such file or directory
+  Ride.cpp
+sources\Ride.cpp(5): fatal error C1083: Cannot open include file: 'Ride.hpp': No such file or directory
+  Vehicle.cpp
+sources\Vehicle.cpp(6): fatal error C1083: Cannot open include file: 'Vehicle.hpp': No such file or directory
+  Generating Code...

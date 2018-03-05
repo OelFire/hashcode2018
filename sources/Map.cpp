@@ -32,23 +32,23 @@ void Map::firstLine(std::ifstream &fileStream) {
 	ss >> rows >> columns >> _nbVehicle >> _nbRides >> _bonus >> _maxTime;
 	_gridSize.set_x(rows);
 	_gridSize.set_y(columns);
-#ifdef __DEBUG__
+/*#ifdef __DEBUG__
 	std::cout << _gridSize.get_x() << " rows, "
 		<< _gridSize.get_y() << " columns, "
 		<< _nbVehicle << " vehicles, "
 		<< _nbRides << " rides, "
 		<< _bonus << " bonus and "
 		<< _maxTime << " steps" << std::endl;
-#endif
+#endif*/
 }
 
 void Map::createVehicleVector() {
 	Vehicle vehicle;
 
 	_vehicles.insert(_vehicles.begin(), _nbVehicle, vehicle);
-#ifdef __DEBUG__
+/*#ifdef __DEBUG__
     std::cout << "Vehicle number " << _vehicles.size() << std::endl;
-#endif
+#endif*/
 }
 
 void Map::parseRides(std::ifstream &fileStream) {
@@ -74,7 +74,7 @@ void Map::parseRides(std::ifstream &fileStream) {
 		_rides.push_back(std::make_shared<Ride>(startPos, endPos, startTime, endTime, rideNumber, abs((endPosX - startPosX) + (endPosY - startPosY))));
 		rideNumber++;
 	}
-
+/*
 #ifdef __DEBUG__
 	std::for_each(_rides.begin(), _rides.end(), [](auto item) {
 		std::cout << "ride from [" << item->getStartPos().get_x() << ", " << item->getStartPos().get_y() << "]"
@@ -84,7 +84,7 @@ void Map::parseRides(std::ifstream &fileStream) {
                   << ", ride id " << item->getRideNumber()
                   << ", ride time " << item->getRideTime() << std::endl; });
 #endif
-
+	*/
 }
 
 void Map::parse() {
@@ -96,9 +96,10 @@ void Map::parse() {
 	firstLine(fileStream);
 	createVehicleVector();
 	parseRides(fileStream);
+	/*
 #ifdef __DEBUG__
 	std::cout << "Nb ride from file:" << _nbRides << ", Nb ride from lines" << _rides.size() << std::endl;
-#endif
+#endif*/
 }
 
 int getDist(const Vector2 &a, const Vector2 &b) {
